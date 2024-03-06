@@ -14,19 +14,18 @@ on:
   workflow_dispatch: # Manually triggered
 
 jobs:
-  Job1:
-    name: First Job to run
+  build:
     runs-on: ubuntu-latest
-    env:
-      MY_ENV: This the value of an env variable
     steps:
-      - name: List_job
-        run: echo '${{ toJSON(job)}}'
-      - name: List_runner
-        run: echo '${{ toJSON(runner)}}'
-      - name: List_ENV
-        run: echo '${{ toJSON(env)}}'
-      - name: List_github
-        run: echo '${{ toJSON(github)}}'
-      - name: List_secrets
-        run: echo '${{ toJSON(secrets)}}'
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get event name
+        run: echo "Event: ${{ github.event_name }}"
+
+      - name: Get current branch name
+        run: echo "Current branch: ${{ github.ref }}"
+
+      - name: List all files
+        run: |
+          find . -type f
